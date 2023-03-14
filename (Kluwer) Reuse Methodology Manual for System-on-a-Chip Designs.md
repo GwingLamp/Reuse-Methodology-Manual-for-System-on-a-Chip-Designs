@@ -1,7 +1,7 @@
 <!--
  * @Author: Gwingcyun
  * @Date: 2023-03-05 20:05:42
- * @LastEditTime: 2023-03-14 10:35:11
+ * @LastEditTime: 2023-03-14 10:38:31
  * @FilePath: /Reuse-Methodology-Manual-for-System-on-a-Chip-Designs/(Kluwer) Reuse Methodology Manual for System-on-a-Chip Designs.md
  * @Description: 
 -->
@@ -237,7 +237,7 @@ end if;
 图5-1和示例5-6说明了端口排序规则和指南。
 
 ![avatar](images/image-406.jpg)
-<center><b>表5-1</b> USB 2.0 核心接口</center>
+<center><b>图5-1</b> USB 2.0 核心接口</center>
 
 # 第六章 宏单元综合指南
 本章讨论了开发宏单元综合脚本的策略，这些脚本使积分电路能够综合宏单元并满足时序要求。本章重点包括：
