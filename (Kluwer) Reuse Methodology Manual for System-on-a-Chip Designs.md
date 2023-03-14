@@ -1,7 +1,7 @@
 <!--
  * @Author: Gwingcyun
  * @Date: 2023-03-05 20:05:42
- * @LastEditTime: 2023-03-14 10:38:31
+ * @LastEditTime: 2023-03-14 21:48:28
  * @FilePath: /Reuse-Methodology-Manual-for-System-on-a-Chip-Designs/(Kluwer) Reuse Methodology Manual for System-on-a-Chip Designs.md
  * @Description: 
 -->
@@ -47,7 +47,7 @@
 **指南** - 尽管可以随意选择，但我们建议在Verilog中多位信号使用`[x:0]`，在VHDL中多位信号使用`(x downto 0)`。我们提出这个建议是为了建立一个标准，从而在多个设计和设计团队中实现一定的一致性。见示例5-1。
 
 **示例5-1** 在端口声明中使用`[x:0]`
-```Verilog
+```
 module DW_addinc (a,
                   b,
                   ci,
@@ -166,7 +166,7 @@ subtype INTEGER_256 is type integer range 0 to 255;
 超过80个字符的行在印刷页和标准终端宽度的计算机屏幕上很难阅读。72个字符的限制提供了页边的空白，增强了代码的可读性，并为行号留出空间。对于HDL代码（VHDL或Verilog），使用回车来划分超过72个字符的行，并在下一行缩进，来表示它是上一行的延续。见示例5-4。
 
 **示例5-4** HDL代码中行的延续
-``` Verilog
+```
 hp_req <= (x0_hp_req or t0_hp_req or xl_hp_req or 
     t1_hp_req or s0_hp_req or t2_hp_req or s1_hp_req or 
     x2_hp_req or x3_hp_req or x4_hp_req or x5_hp_req or 
@@ -238,6 +238,84 @@ end if;
 
 ![avatar](images/image-406.jpg)
 <center><b>图5-1</b> USB 2.0 核心接口</center>
+</br>
+示例5-6 图5-1的端口排序
+Example 5-6 Port ordering for Figure 5-1 
+
+```
+module DW_usbd(
+         // External Clock Generator: Inputs
+refclk,  // Main Reference Clock
+Scan Test Interface: Inputs
+scan_mode      ,  // For scan testing
+                  // UTMI PHY (type 2/3) Interface: Inputs
+                  // Enables
+phy23_rxvalid  ,  // Specifies the valid data LSB
+phy23_rxvalidh ,  // Specifies the valid data on MSB 
+phy23_txready  ,  // Valid data will be polled
+                  // Other control signals 
+phy23_linestate,  //Current state of dp, dmlines
+phy23_rxerror  ,  // Error in received data 
+phy23_rxactive ,  // PHY needs to transmit data
+                  // Data and address lines
+  
+  
+phy23_rx_data,  // 16-bit unidir receive data bus
+
+  // UTMI PHY (type 2/3) Interface: Outputs
+  // Reset
+
+
+phy23_reset      ,  // Reset signal to the PHY
+                    // Enables
+phy23_reset      ,  // Suspend signal to the PHY 
+phy23_xcvr_select,  // Select HS or FS transceiver
+
+                // Application Interface: Inputs 
+                // Resets
+app_rst_n    ,  // Asynchronous reset 
+app_test_mode,  // Bypassing USB reset
+
+               // APP Register R/W Interface: Inputs
+               // Enables
+app_16bit   ,  // APP 16-bit r/w access
+app_reg_sel ,  // APP Register Interface select
+               // Other control signals
+app_rd_n    ,  // APP register-read command
+app_wr_n    ,  // APP register-write command
+               // Data and address lines
+app_addr    ,  // APP Register address bus
+app2usb_data,  // APP Write-data bus 
+
+  // APP Register R/W Interface: Outputs
+
+               // Other control signals
+usb2app_drdy,  // Data ready indication from
+               // DW_usbd to APP
+               // Data and address lines 
+usb2app_data,  // APP Read-Data bus
+
+    //
+    // <other APP interface input signals>
+    // <APP interface output signals>
+);  // DW_usbd
+```
+### 5.2.11 端口映射和类属（generic）映射
+**规则** - 始终对端口和类属使用显式映射，使用命名关联而不是位置关联。见示例5-7。
+
+&#160;&#160;&#160;&#160;**VHDL**
+```
+U_int_txf_ram : DW_ram_r_w_s_dff generic map (
+    data_width => ram_data_width+ram_be_data_width,
+    depth      => fifo_depth,
+    rst_mode   => 1
+)
+PORT map (
+clk   => refclk,
+rst_n => int_txfifo_ram_reset_n, cs_n    => logic_zero,
+wr_n  => int_txfifo_wr_en_n,     rd_addr => int_txfifo_rd_addr, wr_addr => int_txfifo_wr_addr, data_in => int_txfifo_wr_data, data_out => txf_ram_data_out
+);
+```
 
 # 第六章 宏单元综合指南
 本章讨论了开发宏单元综合脚本的策略，这些脚本使积分电路能够综合宏单元并满足时序要求。本章重点包括：
