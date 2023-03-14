@@ -1,11 +1,9 @@
 <!--
- * @Author: Chen Jiongquan
+ * @Author: Gwingcyun
  * @Date: 2023-03-05 20:05:42
- * @LastEditTime: 2023-03-13 01:10:32
+ * @LastEditTime: 2023-03-14 10:35:11
  * @FilePath: /Reuse-Methodology-Manual-for-System-on-a-Chip-Designs/(Kluwer) Reuse Methodology Manual for System-on-a-Chip Designs.md
  * @Description: 
- * 
- * Copyright (c) ${2023} by ${MindMotion}, All Rights Reserved. 
 -->
 # 第五章 RTL编码指南
 本章提供了编码规则和指南的集合。遵循这些练习有助于确保您的HDL代码是可读、可修改和可重复使用的。这些编码实践也有助于在合成和模拟中实现最佳结果。
