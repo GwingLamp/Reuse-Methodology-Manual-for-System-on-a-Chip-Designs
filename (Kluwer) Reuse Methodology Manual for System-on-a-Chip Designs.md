@@ -1,50 +1,51 @@
 <!--
  * @Author: Gwingcyun
  * @Date: 2023-03-05 20:05:42
- * @LastEditTime: 2023-03-14 21:48:28
+ * @LastEditTime: 2023-03-28 14:03:24
  * @FilePath: /Reuse-Methodology-Manual-for-System-on-a-Chip-Designs/(Kluwer) Reuse Methodology Manual for System-on-a-Chip Designs.md
  * @Description: 
+ * Translation for learning and communication ONLY
 -->
-# 第五章 RTL编码指南
-本章提供了编码规则和指南的集合。遵循这些练习有助于确保您的HDL代码是可读、可修改和可重复使用的。这些编码实践也有助于在合成和模拟中实现最佳结果。
+# 第五章 RTL编码指引
+本章提供了编码规则和指引的集合。遵循这些练习有助于确保您的HDL代码是可读、可修改和可重复使用的。这些编码实践也有助于在合成和模拟中实现最佳结果。
 
 这一章的标题包括：
 - 基本编码实践 
 - 可移植性编码 
-- 时钟和复位指南 
+- 时钟和复位指引 
 - 合成编码 
 - 合成分区 
 - 内存设计 
 - 代码分析
 
-## 5.1 编码指南概览
-本章中的编码指南基于一些基本原则。基本目标是开发简单且规范的RTL代码。与更复杂的设计相比，简单和规范的结构本质上更容易设计、编码、验证和综合。任何可重复使用设计的总体目标应该是尽可能保持简单，并仍然满足其功能和性能目标。
+## 5.1 编码指引概览
+本章中的编码指引基于一些基本原则。基本目标是开发简单且规范的RTL代码。与更复杂的设计相比，简单和规范的结构本质上更容易设计、编码、验证和综合。任何可重复使用设计的总体目标应该是尽可能保持简单，并仍然满足其功能和性能目标。
 
-本章详述的编码指南提供了以下通用建议：
+本章详述的编码指引提供了以下通用建议：
 - 使用简单的结构、基本类型（用于VHDL）和简单的时钟方案。
 - 使用一致的编码风格、一致的命名规则以及一致结构的流程和状态机。
 - 使用规范的分区方案，所有模块输出都已声明为寄存器类型，模块大小大致相同。
 - 通过使用注释、有意义的名称和常量或参数，而不是硬编码的数字，使RTL代码易于理解。
 
-通过遵循这些指南，开发人员应该能够更好地生成在功能、时间、功率和区域方面快速收敛到所需性能的代码。
+通过遵循这些指引，开发人员应该能够更好地生成在功能、时间、功率和区域方面快速收敛到所需性能的代码。
 
-设计检查工具提供了一种自动检查RTL是否符合设计和编码指南的方法。
+设计检查工具提供了一种自动检查RTL是否符合设计和编码指引的方法。
 
 ## 5.2 基本编码练习
-以下指南涉及基本的编码实践，重点是词汇约定和基本的RTL结构。
+以下指引涉及基本的编码实践，重点是词汇约定和基本的RTL结构。
 
 ### 5.2.1 通用命名习惯
 **规则** - 为设计制定命名习惯。记录于文档中并在整个设计过程中巧妙地使用命名习惯。
 
-**指南** - 所有信号名称、变量名称和端口名称都使用小写字母。
+**指引** - 所有信号名称、变量名称和端口名称都使用小写字母。
 
-**指南** - 常量名称和用户定义类型使用大写字母。
+**指引** - 常量名称和用户定义类型使用大写字母。
 
-**指南** - 为信号、端口、函数和参数使用有意义的名称。例如，不要为RAM地址总线起名为ra。作为替代，应使用ram_addr。
+**指引** - 为信号、端口、函数和参数使用有意义的名称。例如，不要为RAM地址总线起名为ra。作为替代，应使用ram_addr。
 
 **规则** - 在描述多位总线时，请使用一致的位序。在VHDL中，使用`(x downto 0)`或`(0 to x)`。在Verilog中，使用`[x:0]`或`[0:x]`。使用一致的顺序有助于提高代码的可读性，并减少连接总线时意外交换顺序的意外。
 
-**指南** - 尽管可以随意选择，但我们建议在Verilog中多位信号使用`[x:0]`，在VHDL中多位信号使用`(x downto 0)`。我们提出这个建议是为了建立一个标准，从而在多个设计和设计团队中实现一定的一致性。见示例5-1。
+**指引** - 尽管可以随意选择，但我们建议在Verilog中多位信号使用`[x:0]`，在VHDL中多位信号使用`(x downto 0)`。我们提出这个建议是为了建立一个标准，从而在多个设计和设计团队中实现一定的一致性。见示例5-1。
 
 **示例5-1** 在端口声明中使用`[x:0]`
 ```
@@ -65,9 +66,9 @@ module DW_addinc (a,
     wire co;
 endmodule
 ```
-**指南** - 在可能的情况下，对连接的端口和信号使用相同的名称或类似的名称（例如，`a => a;`或`a => a_int;`）。
+**指引** - 在可能的情况下，对连接的端口和信号使用相同的名称或类似的名称（例如，`a => a;`或`a => a_int;`）。
 
-**指南** - 在可能的情况下，使用表5-1中列出的信号命名约定。
+**指引** - 在可能的情况下，使用表5-1中列出的信号命名约定。
 <center><b>表5-1</b></center>
 
 | 用例    | 用法                                   |
@@ -151,7 +152,7 @@ changes for ism_ad_en_ffd_n and tsm_data_ffd_n
 --checking of legal values.
 subtype INTEGER_256 is type integer range 0 to 255;
 ```
-**指南** - 使用注释来解释端口、信号、变量、信号组或变量组。
+**指引** - 使用注释来解释端口、信号、变量、信号组或变量组。
 
 注释应有逻辑地放置在它们描述的代码附近。评论应简明扼要和解释清晰。避免“杂乱无章”；显而易见的功能不需要注释。关键是描述代码这样写的意图。在进程代码之前插入注释，而不是嵌入其中，以免中断代码的连贯性。
 
@@ -161,7 +162,7 @@ subtype INTEGER_256 is type integer range 0 to 255;
 
 ### 5.2.7 行的长度
 
-**指南** - 行的长度尽量不超过72个字符。
+**指引** - 行的长度尽量不超过72个字符。
 
 超过80个字符的行在印刷页和标准终端宽度的计算机屏幕上很难阅读。72个字符的限制提供了页边的空白，增强了代码的可读性，并为行号留出空间。对于HDL代码（VHDL或Verilog），使用回车来划分超过72个字符的行，并在下一行缩进，来表示它是上一行的延续。见示例5-4。
 
@@ -203,9 +204,9 @@ if (bit_width(m+1) >= 2) then
 end if;
 ```
 
-**指南** - 使用2个空格的缩进。当有几级嵌套时，较大的缩进（例如，8个空格）会限制行长。
+**指引** - 使用2个空格的缩进。当有几级嵌套时，较大的缩进（例如，8个空格）会限制行长。
 
-**指南** - 避免使用tab。编辑器和用户设置的差异使tab的设置不可预测，并可能打乱预期的缩进。有相应的可用程序，如特定语言配置的emacs，这些程序将用空格替换tab。
+**指引** - 避免使用tab。编辑器和用户设置的差异使tab的设置不可预测，并可能打乱预期的缩进。有相应的可用程序，如特定语言配置的emacs，这些程序将用空格替换tab。
 
 ### 5.2.9 避免使用保留词
 
@@ -214,9 +215,9 @@ end if;
 ### 5.2.10 端口排序
 
 **规则** - 以逻辑顺序声明端口，并在整个设计中保持此顺序一致。
-**指南** - 每行声明一个端口，接上注释（最好在同一行上）。
+**指引** - 每行声明一个端口，接上注释（最好在同一行上）。
 
-**指南** - 对于每个接口，按以下顺序声明端口：
+**指引** - 对于每个接口，按以下顺序声明端口：
 
 *Inputs:*
 - Clocks
@@ -232,9 +233,9 @@ end if;
 - Other control signals 
 - Data
 
-**指南** - 用注释来描述端口组。
+**指引** - 用注释来描述端口组。
 
-图5-1和示例5-6说明了端口排序规则和指南。
+图5-1和示例5-6说明了端口排序规则和指引。
 
 ![avatar](images/image-406.jpg)
 <center><b>图5-1</b> USB 2.0 核心接口</center>
@@ -303,7 +304,7 @@ usb2app_data,  // APP Read-Data bus
 ### 5.2.11 端口映射和类属（generic）映射
 **规则** - 始终对端口和类属使用显式映射，使用命名关联而不是位置关联。见示例5-7。
 
-&#160;&#160;&#160;&#160;**VHDL**
+&#160;&#160;&#160;&#160;**VHDL:**
 ```
 U_int_txf_ram : DW_ram_r_w_s_dff generic map (
     data_width => ram_data_width+ram_be_data_width,
@@ -311,19 +312,174 @@ U_int_txf_ram : DW_ram_r_w_s_dff generic map (
     rst_mode   => 1
 )
 PORT map (
-clk   => refclk,
-rst_n => int_txfifo_ram_reset_n, cs_n    => logic_zero,
-wr_n  => int_txfifo_wr_en_n,     rd_addr => int_txfifo_rd_addr, wr_addr => int_txfifo_wr_addr, data_in => int_txfifo_wr_data, data_out => txf_ram_data_out
+clk      => refclk,
+rst_n    => int_txfifo_ram_reset_n,
+cs_n     => logic_zero,
+wr_n     => int_txfifo_wr_en_n,
+rd_addr  => int_txfifo_rd_addr,
+wr_addr  => int_txfifo_wr_addr,
+data_in  => int_txfifo_wr_data,
+data_out => txf_ram_data_out
 );
 ```
+&#160;&#160;&#160;&#160;**Verilog:**
+```
+DW_ram_r_w_s_dff
+  #((`ram_data_width+`ram_be_data_width),
+    (`fifo_depth),1) 
+    U_int_txf_ram (
+     .clk       (refclk),
+     .rst_n     (txfifo_ram_reset_n), 
+     .cs_n      (1'b0),
+     .wr_n      (txfifo_wr_en_n), 
+     .rd_addr   (txfifo_rd_addr), 
+     .wr_addr   (txfifo_wr_addr),
+     .data_in   (txfifo_wr_data), 
+     .data_out  (txf_ram_data_out)
+);
+```
+### 5.2.12 VHDL实体、架构和配置部分
+**指引** - 将VHDL设计的实体、架构和配置部分放在同一个文件中。将有关特定设计的所有信息放在一个文件中，使设计更容易理解和维护。如果源文件中包含带有实体和架构声明的配置，为了综合，它们必须被注释掉。您可以使用VHDL源文件中的`pragma translate_off`和`pragma translate_on`伪注释执行此操作，如示例5-8所示。
 
-# 第六章 宏单元综合指南
+**示例5-8** 使用pragmas注释用于综合的VHDL配置
+```
+-- pragma translate_off
+configuration cfg_example_struc of example is
+  for struc
+    use example_gate;
+  end for;
+end cfg_example_struc; 
+-- pragma translate_on
+```
+
+### 5.2.13 使用函数（functions）
+**指引** - 尽可能使用函数，而不是重复相同的代码。可以的话，泛化函数使其可复用。比如说在您的代码中，地址数据经常从一种格式转换为另一种格式，请使用函数执行转换，并在需要时调用该函数。见示例5-9。
+
+**示例5-9** 创建一个可复用的函数
+
+&#160;&#160;&#160;&#160;**VHDL:**
+```
+-- This function converts the incoming address to the 
+-- corresponding relative address.
+function convert_address 
+    (input_address, offset : integer)
+return integer is 
+begin
+    -- ... function bodygoes here . . . 
+end; -- convert_address
+```
+&#160;&#160;&#160;&#160;**Verilog:**
+```
+// This function converts the incoming address to the // corresponding relative address.
+function [` BUS_WIDTH-1:0] convert_address; input input_address, offset;
+    integer input_address, offset;
+    begin
+        // ... function body goes here ...
+    end
+endfunction // convert_address
+```
+
+### 5.2.14 使用循环和数组(loops and arrays)
+**指引** - 使用循环和数组改善源代码的可读性。例如，用来描述带有循环结构的移位寄存器、PN序列生成器或Johnson计数器可以大大减少源代码的行数，同时仍然保持出色的可读性。见示例5-10。
+
+**示例5-10** 使用循环提高可读性
+
+```
+shift_delay_loop: for i in 1 to (number_taps-l) loop 
+    delay(i) := delay(i-1);
+end loop shift_delay_loop;
+```
+
+数组（`array`）结构还减少了描述函数所需的语句数量，并提高了可读性。示例5-11是作为触发器二维数组实现的寄存器组（register bank）的示例。
+
+**示例5-11** 使用数组描述的寄存器组
+```
+type reg_array is array(natural range <>) of 
+    std_logic_vector(REG_WIDTH-1 downto 0);
+signal reg: reg_array(WORD_COUNT-1 downto 0);
+begin
+    REG_PROC: process(clk) 
+    begin
+        if clk='1' and clk'event then 
+            if we='1' then
+                reg(addr) <= data;
+            end if; 
+        end if;
+    end process REG_PROC;
+    data_out <= reg(addr);
+```
+
+**指引** - 数组的仿真速度比`for`循环快得多。为了提高仿真性能，尽可能在数组上使用向量运算（vector operations），而不是`for`循环操作。见示例5-12。
+
+**示例5-12** 使用数组进行更快的仿真
+
+&#160;&#160;&#160;&#160;**较差的编码风格:**
+```
+function my_xor( bbit : std_logic;
+                    avec : std_logic_vector(x downto y) )
+    return std_logic_vector is 
+variable cvec :
+    std_logic_vector(avec'range-1 downto 0); 
+begin
+    for i in avec'range loop         -- bit-level for loop 
+        cvec(i) := avec(i) xor bbit; -- bit-level xor
+    end loop;
+    return(cvec); 
+end;
+```
+&#160;&#160;&#160;&#160;**推荐的编码风格:**
+```
+function my_xor( bbit : std_logic;
+                    avec : std_logic_vector (x downto y) )
+    return std_logic_vector is 
+variable cvec, temp :
+    std_logic_vector(avec' range-1 downto 0); 
+begin
+    temp := (others => bbit); 
+    cvec := avec xor temp; 
+    return(cvec);
+end;
+```
+
+### 5.2.15 使用有意义的标签（labels）
+
+**规则** - 用有意义的名称标记每个进程块。这对调试非常有帮助。例如，您可以通过引用进程标签来设置断点。
+
+**指引** - 用`<name>_PROC`标记每个进程块。
+
+**规则** -用有意义的名称标记每个实例。
+
+**指引** -用`U_<name>`标记每个实例。
+
+在多层设计层次结构中，保持标签简短而有意义。长进程和实例标签可能会导致设计层次中的路径名称过长。见示例5-13。
+
+**规则** - 不要复制任何信号、变量或实体名称。例如，如果您有一个名为`incr`的信号，不要使用`incr`作为进程标签，而是使用`incr_prc`。这更好地将名称与其使用联系起来，并避免了一些工具在名称重复时出现的问题。
+
+**示例5-13** 有意义的进程标签
+
+```
+-- Synchronize requests (hold for one clock).
+
+SYNC_PROC : process (reql, req2, rst, clk) 
+    ... process body here ...
+
+end process SYNC_PROC;
+```
+
+## 5.3 可移植性编码
+
+以下指南解决了可移植性问题。通过遵循这些指南，您可以创建与技术无关的代码，与各种模拟工具兼容，并且可以轻松地从VHDL翻译成Verilog（或从Verilog翻译成VHDL）。
+
+### 5.3.1 仅使用IEEE标准类型（VHDL）
+
+您可以创建其他类型和子类型，但所有类型和子类型都应基于IEEE标准类型。示例5-14展示了如何基于IEEE标准类型`std_logic_vector`创建子类型（`word_type`）。
+# 第六章 宏单元综合指引
 本章讨论了开发宏单元综合脚本的策略，这些脚本使积分电路能够综合宏单元并满足时序要求。本章重点包括：
 - 合成问题概述 
 - 复用宏单元的综合策略 
 - 高性能综合
 - RAM和数据通路生成器 
-- 综合脚本的编码指南
+- 综合脚本的编码指引
 
 ## 6.1 综合问题概览
 参数化软核（soft macro）的综合存在一些特殊问题：
@@ -333,7 +489,7 @@ wr_n  => int_txfifo_wr_en_n,     rd_addr => int_txfifo_rd_addr, wr_addr => int_t
 
 本章介绍了一套实现这些目标的工具和方法。
 
-本章的综合指南基于指导上一章的许多相同基本原则。首先，综合和时序设计必须从宏单元设计周期开始。
+本章的综合指引基于指导上一章的许多相同基本原则。首先，综合和时序设计必须从宏单元设计周期开始。
 
 即：
 - 宏单元的功能规格必须描述设计的时序、面积和功率要求。
