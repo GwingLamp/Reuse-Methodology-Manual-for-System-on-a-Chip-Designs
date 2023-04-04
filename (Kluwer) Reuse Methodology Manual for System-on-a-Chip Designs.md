@@ -1,7 +1,7 @@
 <!--
  * @Author: Gwingcyun
  * @Date: 2023-03-05 20:05:42
- * @LastEditTime: 2023-04-04 15:34:12
+ * @LastEditTime: 2023-04-04 15:43:28
  * @FilePath: /Reuse-Methodology-Manual-for-System-on-a-Chip-Designs/(Kluwer) Reuse Methodology Manual for System-on-a-Chip Designs.md
  * @Description: 
  * Translation for learning and communication ONLY
@@ -545,8 +545,10 @@ end process SYNC_PROC;
 
 图5-6显示了一种设计，其中U2在scan-in、测试或scan-out期间不能计时，也不能成为扫描链的一部分，因为它是设计内部生成的时钟。用同步设计或使用多个时钟作为替代。
 
-![avatar](images/image-421.jpg)
-<center><b>图5-6</b> 错误示例：内部生成的时钟</center>
+<div align="center">
+<img src="images/image-421.jpg" style="zoom:100%" alt="Figure 5.5"/>
+</div>
+<p align="center"><b>图5-6</b> 错误示例：内部生成的时钟</p>
 
 ### 5.4.5 门控时钟和低功耗设计
 
