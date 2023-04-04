@@ -1,7 +1,7 @@
 <!--
  * @Author: Gwingcyun
  * @Date: 2023-03-05 20:05:42
- * @LastEditTime: 2023-04-04 15:19:05
+ * @LastEditTime: 2023-04-04 15:34:12
  * @FilePath: /Reuse-Methodology-Manual-for-System-on-a-Chip-Designs/(Kluwer) Reuse Methodology Manual for System-on-a-Chip Designs.md
  * @Description: 
  * Translation for learning and communication ONLY
@@ -532,9 +532,10 @@ end process SYNC_PROC;
 
 许多低功耗设计都需要门控时钟，但它们不应该在RTL中成为macro。有关处理门控时钟的首选方式，请参阅章节5.4.5“门控时钟和低功耗设计”。如果独立的flip-flops需要在设计中门控，时钟门控应该由电源同步工具插入，以便RTL保持技术可移植性。
 
-![avatar](images/image-420.jpg)
+<div align="center">
+<img src="images/image-420.jpg" style="zoom:100%" alt="Figure 5.5"/>
+</div>
 <p align="center"><b>图5-5</b> 错误示例：门控时钟较差的测试性以及时钟偏移（skew）问题</p>
-<center><b>图5-5</b> 错误示例：门控时钟较差的测试性以及时钟偏移（skew）问题</center>
 
 ### 5.4.4 避免内部生成的时钟
 
